@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Pył zawieszony</title>
+	<meta name="description" content="Stacja pogodowa AGH"/>
+<link rel="stylesheet" href="css/style1.css" type="text/css" /> 
+<link href='https://fonts.googleapis.com/css?family=Lato:400,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/plot.js"></script>
+	<script type="text/javascript">
+	window.onload = load;
+	function generuj() {
+		var mydata = [7];
+		var x;
+		for (i=0;i<7; i++) {
+		x=Math.random()*70;
+		mydata[i]=x;
+		}
+		var myplot= new MakeDraw();
+		myplot.id="mycanvas";
+		myplot.plotColor='rgba(200, 230, 50, 1)';
+		myplot.fSize=15;
+		myplot.data= mydata;
+		myplot.plot();
+		
+		setTimeout("generuj()", 5000);
+	}
+	
+	</script>
+</head>
+<body >
+<div class="container">
+<div class="topbar" ></div>
+<div id="menu">
+<ol>
+  <li><a href ="#" class = "menu"> Temperatura</a>
+  <ul>
+  <li><a href="tempD.html">Wykres 24h</a></li>
+  <li><a href="tempW.html">Wykres tygodniowy</a></li>
+  <li><a href="tempM.html">Wykres 30dniowy</a></li>
+  </ul>
+  </li>
+  <li><a href ="#" class = "menu"> Ciśnienie</a>
+  <ul>
+  <li><a href="cisnienieD.html">Wykres 24h</a></li>
+  <li><a href="cisnienieW.html">Wykres tygodniowy</a></li>
+  <li><a href="cisnienieM.html">Wykres 30dniowy</a></li>
+  </ul>
+  </li>
+  <li><a href ="#" class = "menu">Pył zawieszony</a>
+  <ul>
+  <li><a href="pylD.html">Wykres 24h</a></li>
+  <li><a href="pylW.html">Wykres tygodniowy</a></li>
+  <li><a href="pylM.html">Wykres 30dniowy</a></li>
+  </ul>
+  </li>
+  <li><a href ="#" class = "menu">Tlenek azotu</a>
+  <ul>
+  <li><a href="tlenekD.html">Wykres 24h</a></li>
+  <li><a href="tlenekW.html">Wykres tygodniowy</a></li>
+  <li><a href="tlenekM.html">Wykres 30dniowy</a></li>
+  </ul>
+  </li>
+  <li><a href ="#" class = "menu">Pole E</a>
+  <ul>
+  <li><a href="poleD.html">Wykres 24h</a></li>
+  <li><a href="poleW.html">Wykres tygodniowy</a></li>
+  <li><a href="poleM.html">Wykres 30dniowy</a></li>
+  </ul>
+  </li>
+  <li><a href ="oautorach.html" class = "menu">O autorach</a></li>
+  </ol>
+ <div style="clear:both;" ></div>
+</div>
+<div class="content">
+<div id="data">
+Aktualny odczyt czujnika:
+</div>
+<div id="timer"></div>
+<div style="clear:both;" ></div>
+<div class="description">Wykres zmian ilości pyłu w powietrzu przez ostatnie 7dni: </div>
+<div class="graph">
+<canvas id="mycanvas" width= "920" height="450"></canvas> 
+<a href="index.html" title="Powrót do strony głównej" style = "text-decoration:none;">Strona główna</a>
+</div>
+</div>
+<div class="footer">
+Laboratorium projektowe 2015 
+</div>
+</div>
+</body>
+</html>

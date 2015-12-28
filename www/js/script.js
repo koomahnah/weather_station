@@ -1,0 +1,36 @@
+	function odliczanie() {
+		var dzisiaj = new Date();
+		var dzien = dzisiaj.getDate();
+		var miesiac = dzisiaj.getMonth()+1;
+		var rok = dzisiaj.getFullYear();
+		var godzina = dzisiaj.getHours();
+		if (godzina<10) godzina = "0"+godzina;
+		var minuty = dzisiaj.getMinutes();
+		if (minuty<10) minuty = "0"+minuty;
+		var sekundy = dzisiaj.getSeconds();
+		if (sekundy<10) sekundy = "0"+sekundy;
+		document.getElementById("timer").innerHTML = 
+		dzien+"/"+miesiac+"/"+rok+ "<br>"+godzina+":"+minuty+":"+sekundy;
+		setTimeout("odliczanie()", 1000);
+	}
+	function load() {
+		generuj();
+		odliczanie();
+		zmienslajd();
+	}
+	$(document).ready(function() {
+		var NavY=$('#menu').offset().top;
+		var stickyNav = function() {
+			var ScrollY= $(window).scrollTop();
+			if (ScrollY > NavY) {
+				$('#menu').addClass('sticky');
+			} else {
+				$('#menu').removeClass('sticky');
+			}
+			};
+			stickyNav();
+			$(window).scroll(function() {
+				stickyNav();
+			});
+			});
+	
