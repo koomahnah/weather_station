@@ -24,12 +24,22 @@ def sched_next_event(sch, unix_time):
 def fill_averages():
     """ Fill tables containing averaged values of parameters. """
     logging.info("entry")
-    time_dt = datetime.now() - timedelta(hours=1)
+    time_dt = datetime.now() - timedelta(hours=0)
     start_dt = datetime(time_dt.year, time_dt.month, time_dt.day,
             time_dt.hour, 0, 0)
     stop_dt = datetime(time_dt.year, time_dt.month, time_dt.day,
             time_dt.hour, 59, 59)
-    print compute_average(start_dt, stop_dt, ["wiatr", "temp", "wilg"], "dane2")
+    avg = compute_average(start_dt, stop_dt, ["wiatr", "temp", "wilg"], "dane2")
+    if avg == None:
+        logging.warning("Received no data from compute_average!")
+        return
+    add_entry = ("INSERT INTO avg_data "
+                 "(time, temp, wiatr, wilg) "
+                 "VALUES (%s, %s, %s, %s)")
+    start_dt_str = start_dt.strftime("%Y-%m-%d %H:%M:%S")
+    query = add_entry % (start_dt_str, avg['temp'], avg['wiatr'], avg['wilg'])
+    logging.info("inserting: %r", query)
+    cursor.execute(add_entry, (start_dt_str, avg['temp'], avg['wiatr'], avg['wilg']))
 
 def compute_average(start_dt, stop_dt, param, table):
     """ Compute average of parameters' names list 'param' over time 'start_dt' -
@@ -55,6 +65,8 @@ def compute_average(start_dt, stop_dt, param, table):
         for i, element in enumerate(row):
             param_sum[i] += row[element]
         logging.info("%r", row)
+    if n == 0:
+        return None
     param_avg = {}
     for i, element in enumerate(param_sum):
         param_avg[param[i]] = float(param_sum[i]) / n
@@ -68,12 +80,12 @@ def update_event(unix_time):
                  "(time, temp, wiatr, wilg) "
                  "VALUES (%s, %s, %s, %s)")
     dt = datetime.fromtimestamp(unix_time)
-#    if dt.minute == 0 and dt.second == 0:
-#       fill_averages()
+    if dt.minute == 0 and dt.second == 0:
+       fill_averages()
     dt_str = dt.strftime("%Y-%m-%d %H:%M:%S")
     query = add_entry % (dt_str, "15", "25", "15")
     logging.info("inserting: %r", query)
-    cursor.execute(add_entry, (dt_str, "15", "25", "15"))
+    cursor.execute(add_entry, (dt_str, "5", "5", "5"))
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(funcName)s: %(message)s')
 cnx = mysql.connector.connect(user='cumana', password='',
