@@ -60,7 +60,8 @@
 			<div class="dottedline"></div>
 			<p>Dzięki naszej stacji będziesz mógł sprawdzić jakie są najważniejsze parametry powietrza w Krakowie.</p>
 			<br></br>
-			<h3>Dzisiejsze dane z czujników: </h3>
+			<p>
+				<h3>Dzisiejsze dane z czujników: </h3>
 				<?php
 				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
 					'cumana', 'vuFij0BS');
@@ -72,13 +73,13 @@
 					echo '<td>Wiatr</td>';
 					echo '<td>Temperatura</td>';
 					echo '</tr>';
-					$query = "SELECT * FROM avg_data WHERE DATE(time) = CURDATE(); ";
+					$query = "SELECT *, TIME(time) FROM dane2 WHERE DATE(time) = CURDATE(); ";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
-						echo '<td>'.$row['time'].'</td>';
-						echo '<td>'.$row['wilg'].'</td>';
-						echo '<td>'.$row['wiatr'].'</td>';
-						echo '<td>'.$row['temp'].'</td>';
+						echo '<td>'.$row['TIME(time)'].'</td>';
+						echo '<td>'.number_format((float)$row['wilg'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['wiatr'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['temp'], 2, '.', ' ').'</td>';
 						echo '</tr>';
 					}
 					echo '</table>';
@@ -86,6 +87,61 @@
 					echo "error!";
 				}
 				?>
+			</p>
+			<p>
+				<h3>Dzisiejsze średnie godzinowe:</h3>
+				<?php
+				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
+					'cumana', 'vuFij0BS');
+				try {
+					echo '<table>';
+					echo '<tr>';
+					echo '<td>Czas</td>';
+					echo '<td>Wilgotność</td>';
+					echo '<td>Wiatr</td>';
+					echo '<td>Temperatura</td>';
+					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), HOUR(time) FROM dane2 WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
+					foreach($db->query($query) as $row) {
+						echo '<tr>';
+						echo '<td>'.$row['HOUR(time)'].':00</td>';
+						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(wiatr)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>';
+						echo '</tr>';
+					}
+					echo '</table>';
+				} catch(PDOException $ex) {
+					echo "error!";
+				}
+				?>
+			</p>
+			<p>
+				<h3>Miesięczne średnie dobowe:</h3>
+				<?php
+				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
+					'cumana', 'vuFij0BS');
+				try {
+					echo '<table>';
+					echo '<tr>';
+					echo '<td>Czas</td>';
+					echo '<td>Wilgotność</td>';
+					echo '<td>Wiatr</td>';
+					echo '<td>Temperatura</td>';
+					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), DAY(time) FROM dane2 WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
+					foreach($db->query($query) as $row) {
+						echo '<tr>';
+						echo '<td>'.$row['DAY(time)'].'</td>';
+						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(wiatr)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>';
+						echo '</tr>';
+					}
+					echo '</table>';
+				} catch(PDOException $ex) {
+					echo "error!";
+				}
+				?>
+			</p>
 		</div>
 		<div class="footer">
 			Laboratorium projektowe 2015
