@@ -10,24 +10,7 @@
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="js/script.js"></script>
 	<script src="js/plot.js"></script>
-	<script type="text/javascript">
-	window.onload = load;
-	function generuj() {
-		var mydata = [24];
-		var x;
-		for (i=0;i<24; i++) {
-			x=Math.random()*70;
-			mydata[i]=x;
-		}
-		var myplot= new MakeDraw();
-		myplot.id="mycanvas";
-		myplot.plotColor='rgba(200, 230, 50, 1)';
-		myplot.fSize=15;
-		myplot.data= mydata;
-		myplot.plot();
-		setTimeout("generuj()", 5000);
-	}
-	</script>
+	
 </head>
 <body >
 	<div class="container">
@@ -74,6 +57,24 @@
 			<div style="clear:both;" ></div>
 		</div>
 		<div class="content">
+		<script type="text/javascript">
+	window.onload = load;
+	function generuj() {
+		var mydata = [24];
+		var x;
+		for (i=0;i<24; i++) {
+			x=Math.random()*70;
+			mydata[i]=x;
+		}
+		var myplot= new MakeDraw();
+		myplot.id="mycanvas";
+		myplot.plotColor='rgba(200, 230, 50, 1)';
+		myplot.fSize=15;
+		myplot.data= mydata;
+		myplot.plot();
+		setTimeout("generuj()", 5000);
+	}
+	</script>
 			<div id="data">
 				Aktualny odczyt czujnika:
 			</div>

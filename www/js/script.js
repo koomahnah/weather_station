@@ -1,7 +1,30 @@
+var request;
+var e;
+function odbierzDane()
+{
+    if (request.readyState == 4) {
+        if (request.status == 200) {
+            e.innerHTML = request.responseText;            
+        }
+    }
+}
+function wymienTresc(adresurl, htmlid)
+{
+    if (request = createReq()) {
+        e = document.getElementByClassName(htmlid);
+        request.open("GET", adresurl, true);
+        request.onreadystatechange = odbierzDane;
+        request.send(null);    
+    } else {
+		alert("Obiekt nie mogl zostac stworzony!");
+	}
+}
 	function odliczanie() {
 		var dzisiaj = new Date();
 		var dzien = dzisiaj.getDate();
+		if (dzien<10) dzien = "0" + dzien;
 		var miesiac = dzisiaj.getMonth()+1;
+		if (miesiac<10) miesiac = "0" + miesiac;
 		var rok = dzisiaj.getFullYear();
 		var godzina = dzisiaj.getHours();
 		if (godzina<10) godzina = "0"+godzina;
@@ -16,7 +39,6 @@
 	function load() {
 		generuj();
 		odliczanie();
-		zmienslajd();
 	}
 	$(document).ready(function() {
 		var NavY=$('#menu').offset().top;
@@ -33,4 +55,3 @@
 				stickyNav();
 			});
 			});
-	

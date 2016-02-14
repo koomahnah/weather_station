@@ -1,5 +1,5 @@
-<!DOCTYPE HTML>
-<html lang="pl">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="js/ajax.js"></script>
 	<script src="js/script.js"> </script>
 	<script src="js/plot.js"></script>
 </head>
@@ -18,7 +19,7 @@
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
 					<ul>
-						<li><a href="tempD.html">Wykres 24h</a></li>
+						<li><a href="#" onclick="$('.content).html('tempD.html');">Wykres 24h</a></li>
 						<li><a href="tempW.html">Wykres tygodniowy</a></li>
 						<li><a href="tempM.html">Wykres 30dniowy</a></li>
 					</ul>
