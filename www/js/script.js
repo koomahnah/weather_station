@@ -1,24 +1,4 @@
-var request;
-var e;
-function odbierzDane()
-{
-    if (request.readyState == 4) {
-        if (request.status == 200) {
-            e.innerHTML = request.responseText;            
-        }
-    }
-}
-function wymienTresc(adresurl, htmlid)
-{
-    if (request = createReq()) {
-        e = document.getElementByClassName(htmlid);
-        request.open("GET", adresurl, true);
-        request.onreadystatechange = odbierzDane;
-        request.send(null);    
-    } else {
-		alert("Obiekt nie mogl zostac stworzony!");
-	}
-}
+
 	function odliczanie() {
 		var dzisiaj = new Date();
 		var dzien = dzisiaj.getDate();
@@ -55,3 +35,5 @@ function wymienTresc(adresurl, htmlid)
 				stickyNav();
 			});
 			});
+		
+		

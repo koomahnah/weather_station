@@ -73,9 +73,9 @@ text-align: justify;
 }
 #data {
 	float: left;
-	color: #cc0033;
-	font-size: 32px;
+	font-size: 18px;
 	text-align:left;
+	color: #303030;
 	width: 700px;
 }
 #timer {

@@ -8,7 +8,6 @@
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="js/ajax.js"></script>
 	<script src="js/script.js"> </script>
 	<script src="js/plot.js"></script>
 </head>
@@ -19,37 +18,37 @@
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
 					<ul>
-						<li><a href="#" onclick="$('.content).html('tempD.html');">Wykres 24h</a></li>
-						<li><a href="tempW.html">Wykres tygodniowy</a></li>
-						<li><a href="tempM.html">Wykres 30dniowy</a></li>
+						<li><a href="tempH.php">Wykres godzinny</a></li>
+						<li><a href="tempD.php">Wykres 24h</a></li>
+						<li><a href="tempM.php">Wykres 30dniowy</a></li>
 					</ul>
 				</li>
 				<li><a href ="#" class = "menu"> Ciśnienie</a>
 					<ul>
-						<li><a href="cisnienieD.html">Wykres 24h</a></li>
-						<li><a href="cisnienieW.html">Wykres tygodniowy</a></li>
-						<li><a href="cisnienieM.html">Wykres 30dniowy</a></li>
+						<li><a href="cisnienieH.php">Wykres godzinny</a></li>
+						<li><a href="cisnienieD.php">Wykres 24h</a></li>
+						<li><a href="cisnienieM.php">Wykres 30dniowy</a></li>
 					</ul>
 				</li>
 				<li><a href ="#" class = "menu">Pył zawieszony</a>
 					<ul>
-						<li><a href="pylD.html">Wykres 24h</a></li>
-						<li><a href="pylW.html">Wykres tygodniowy</a></li>
-						<li><a href="pylM.html">Wykres 30dniowy</a></li>
+						<li><a href="pylH.php">Wykres godzinny</a></li>
+						<li><a href="pylD.php">Wykres 24h</a></li>
+						<li><a href="pylM.php">Wykres 30dniowy</a></li>
 					</ul>
 				</li>
 				<li><a href ="#" class = "menu">Tlenek azotu</a>
 					<ul>
-						<li><a href="tlenekD.html">Wykres 24h</a></li>
-						<li><a href="tlenekW.html">Wykres tygodniowy</a></li>
-						<li><a href="tlenekM.html">Wykres 30dniowy</a></li>
+						<li><a href="tlenekH.php">Wykres godzinny</a></li>
+						<li><a href="tlenekD.php">Wykres 24h</a></li>
+						<li><a href="tlenekM.php">Wykres 30dniowy</a></li>
 					</ul>
 				</li>
-				<li><a href ="#" class = "menu">Pole E</a>
+				<li><a href ="#" class = "menu">Wilgotność</a>
 					<ul>
-						<li><a href="poleD.html">Wykres 24h</a></li>
-						<li><a href="poleW.html">Wykres tygodniowy</a></li>
-						<li><a href="poleM.html">Wykres 30dniowy</a></li>
+						<li><a href="wilgotnoscH.php">Wykres godzinny</a></li>
+						<li><a href="wilgotnoscD.php">Wykres 24h</a></li>
+						<li><a href="wilgotnoscM.php">Wykres 30dniowy</a></li>
 					</ul>
 				</li>
 				<li><a href ="oautorach.html" class = "menu">O autorach</a></li>
@@ -61,13 +60,13 @@
 			<div class="dottedline"></div>
 			<p>Dzięki naszej stacji będziesz mógł sprawdzić jakie są najważniejsze parametry powietrza w Krakowie.</p>
 			<br></br>
-			<p>
+			<p> 
 				<h3>Dzisiejsze dane z czujników: </h3>
 				<?php
 				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
 					'cumana', 'vuFij0BS');
 				try {
-					echo '<table>';
+					echo '<table id="current">';
 					echo '<tr>';
 					echo '<td>Czas</td>';
 					echo '<td>Wilgotność</td>';
@@ -76,12 +75,12 @@
 					echo '</tr>';
 					$query = "SELECT *, TIME(time) FROM dane2 WHERE DATE(time) = CURDATE(); ";
 					foreach($db->query($query) as $row) {
-						echo '<tr>';
-						echo '<td>'.$row['TIME(time)'].'</td>';
-						echo '<td>'.number_format((float)$row['wilg'], 2, '.', ' ').'</td>';
-						echo '<td>'.number_format((float)$row['wiatr'], 2, '.', ' ').'</td>';
-						echo '<td>'.number_format((float)$row['temp'], 2, '.', ' ').'</td>';
-						echo '</tr>';
+					echo '<tr>';
+					echo '<td>'.$row['TIME(time)'].'</td>';
+					echo '<td>'.number_format((float)$row['wilg'], 2, '.', ' ').'</td>';
+					echo '<td>'.number_format((float)$row['wiatr'], 2, '.', ' ').'</td>';
+					echo '<td>'.number_format((float)$row['temp'], 2, '.', ' ').'</td>';
+					echo '</tr>';
 					}
 					echo '</table>';
 				} catch(PDOException $ex) {
@@ -95,7 +94,7 @@
 				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
 					'cumana', 'vuFij0BS');
 				try {
-					echo '<table>';
+					echo '<table id="averageH">';
 					echo '<tr>';
 					echo '<td>Czas</td>';
 					echo '<td>Wilgotność</td>';
@@ -122,7 +121,7 @@
 				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
 					'cumana', 'vuFij0BS');
 				try {
-					echo '<table>';
+					echo '<table id = "averageM">';
 					echo '<tr>';
 					echo '<td>Czas</td>';
 					echo '<td>Wilgotność</td>';
