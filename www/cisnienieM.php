@@ -25,8 +25,10 @@
 			}
 		var myplot= new MakeDraw();
 		myplot.id="mycanvas";
+		myplot.enumerateH = 0;
 		myplot.plotColor='rgba(200, 230, 50, 1)';
 		myplot.fSize=15;
+		myplot.enumerateH =0;
 		myplot.data= mydata;
 		myplot.plot();
 		setTimeout("generuj()", 5000);
@@ -88,7 +90,7 @@
 				try {
 					echo '<table id = "averageM">';
 					echo '<tr>';
-					echo '<td>Czas</td>';
+					echo '<td>Dzień</td>';
 					echo '<td>Ciśnienie</td>'; 
 					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), DAY(time) FROM dane2 WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
 					foreach($db->query($query) as $row) {
@@ -108,6 +110,7 @@
 			<div style="clear:both;" ></div>
 			<div class="description">Wykres zmian ciśnienia przez ostatnie 30dni: </div>
 			<div class="graph">
+				<div class = "label"> Ciśnienie [hPa] </div>
 				<canvas id="mycanvas" width= "920" height="450"></canvas>
 				<a href="index.php" title="Powrót do strony głównej" style = "text-decoration:none;">Strona główna</a>
 			</div>

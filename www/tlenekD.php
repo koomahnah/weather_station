@@ -27,6 +27,7 @@
 		myplot.id="mycanvas";
 		myplot.plotColor='rgba(200, 230, 50, 1)';
 		myplot.fSize=15;
+		myplot.enumerateH =0;
 		myplot.data= mydata;
 		myplot.plot();
 		setTimeout("generuj()", 5000);
@@ -107,6 +108,7 @@
 			<div style="clear:both;" ></div>
 			<div class="description">Wykres zmian ilości tlenku azotu w powietrzu przez ostatnie 24h: </div>
 			<div class="graph">
+				<div class="label">Tlenek azotu [ug/m<sup>3</sup>]</div>
 				<canvas id="mycanvas" width= "920" height="450"></canvas>
 				<a href="index.php" title="Powrót do strony głównej" style = "text-decoration:none;">Strona główna</a>
 			</div>

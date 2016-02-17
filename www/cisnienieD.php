@@ -71,14 +71,17 @@
 				 mydata[i] = cellVal;
 			}
 		var myplot= new MakeDraw();
+		var dzisiaj = new Date();
 		myplot.id="mycanvas";
 		myplot.plotColor='rgba(200, 230, 50, 1)';
 		myplot.fSize=15;
+		myplot.enumerateH=0;
 		myplot.data= mydata;
 		myplot.plot();
 		setTimeout("generuj()", 5000);
 	}
 	</script>
+			<div id="timer"></div>
 			<div id="data">
 				<p>
 				<h3>Dzisiejsze średnie godzinowe:</h3>
@@ -103,14 +106,15 @@
 				}
 				?>
 				</p>
+      <div class="force-overflow"></div>
 			</div>
-			<div id="timer"></div>
 			<div style="clear:both;" ></div>
 			<div class="description">Wykres zmian ciśnienia przez ostatnie 24h: </div>
+			<div class = "label"> Ciśnienie [hPa] </div>
 			<div class="graph">
-				<canvas id="mycanvas" width= "920" height="450"></canvas>
+				<canvas id="mycanvas" width= "920" height="450"></canvas>			
 				<a href="index.php" title="Powrót do strony głównej" style = "text-decoration:none;">Strona główna</a>
-			</div>
+			</div>		
 		</div>
 		<div class="footer">
 			&copy; Laboratorium projektowe 
