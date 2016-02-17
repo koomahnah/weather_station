@@ -34,29 +34,28 @@ def get_uart_data():
     if port.read(5) != b"start":
         port.reset_input_buffer()
         return None
-    temp = float(port.read(5))
-    wiatr = float(port.read(5))
-    wilg = float(port.read(5))
-    return [temp, wiatr, wilg]
+    temp = float(port.read(6))
+    cisn = float(port.read(6))
+    pyl = float(port.read(6))
+    azot = float(port.read(6))
+    wilg = float(port.read(6))
+    return [temp, cisn, pyl, azot, wilg]
 
 def update_event(unix_time):
     logging.info("update_event")
     logging.info("now is %r", datetime.now())
-    add_entry = ("INSERT INTO dane2 "
-                 "(time, temp, wiatr, wilg) "
-                 "VALUES (%s, %s, %s, %s)")
+    add_entry = ("INSERT INTO dane "
+                 "(time, temp, cisn, pyl, azot, wilg) "
+                 "VALUES (%s, %s, %s, %s, %s, %s)")
     dt = datetime.fromtimestamp(unix_time)
     dt_str = dt.strftime("%Y-%m-%d %H:%M:%S")
-    ret = get_uart_data()
-    if ret == None:
+    r = get_uart_data()
+    if r == None:
         return
-    temp = ret[0]
-    wiatr = ret[1]
-    wilg = ret[2]
-    logging.info("Got %r from uart", [temp, wiatr, wilg])
-    query = add_entry % (dt_str, temp, wiatr, wilg)
+    logging.info("Got %r from uart", [r[0], r[1], r[2], r[3], r[4]])
+    query = add_entry % (dt_str, r[0], r[1], r[2], r[3], r[4])
     logging.info("inserting: %r", query)
-    cursor.execute(add_entry, (dt_str, temp, wiatr, wilg))
+    cursor.execute(add_entry, (dt_str, r[0], r[1], r[2], r[3], r[4]))
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(funcName)s: %(message)s')
 cnx = mysql.connector.connect(user='cumana', password='vuFij0BS',

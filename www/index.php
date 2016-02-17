@@ -61,7 +61,7 @@
 			<p>Dzięki naszej stacji będziesz mógł sprawdzić jakie są najważniejsze parametry powietrza w Krakowie.</p>
 			<br></br>
 			<p> 
-				<h3>Dzisiejsze dane z czujników: </h3>
+				<h3>Aktualne dane z czujników: </h3>
 				<?php
 				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
 					'cumana', 'vuFij0BS');
@@ -69,17 +69,21 @@
 					echo '<table id="current">';
 					echo '<tr>';
 					echo '<td>Czas</td>';
-					echo '<td>Wilgotność</td>';
-					echo '<td>Wiatr</td>';
 					echo '<td>Temperatura</td>';
+					echo '<td>Ciśnienie</td>';
+					echo '<td>Pył</td>';
+					echo '<td>Tlenek azotu</td>';
+					echo '<td>Wilgotność</td>';
 					echo '</tr>';
-					$query = "SELECT *, TIME(time) FROM dane2 WHERE DATE(time) = CURDATE(); ";
+					$query = "SELECT *, TIME(time) FROM dane ORDER BY id DESC LIMIT 1";
 					foreach($db->query($query) as $row) {
 					echo '<tr>';
 					echo '<td>'.$row['TIME(time)'].'</td>';
-					echo '<td>'.number_format((float)$row['wilg'], 2, '.', ' ').'</td>';
-					echo '<td>'.number_format((float)$row['wiatr'], 2, '.', ' ').'</td>';
 					echo '<td>'.number_format((float)$row['temp'], 2, '.', ' ').'</td>';
+					echo '<td>'.number_format((float)$row['cisn'], 2, '.', ' ').'</td>';
+					echo '<td>'.number_format((float)$row['pyl'], 2, '.', ' ').'</td>';
+					echo '<td>'.number_format((float)$row['azot'], 2, '.', ' ').'</td>';
+					echo '<td>'.number_format((float)$row['wilg'], 2, '.', ' ').'</td>';
 					echo '</tr>';
 					}
 					echo '</table>';
@@ -97,16 +101,21 @@
 					echo '<table>';
 					echo '<tr>';
 					echo '<td>Czas</td>';
-					echo '<td>Wilgotność</td>';
-					echo '<td>Wiatr</td>';
 					echo '<td>Temperatura</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), MINUTE(time) FROM dane2 WHERE HOUR(time) = HOUR(NOW()) GROUP BY MINUTE(time) ";
+					echo '<td>Ciśnienie</td>';
+					echo '<td>Pył</td>';
+					echo '<td>Tlenek azotu</td>';
+					echo '<td>Wilgotność</td>';
+					echo '</tr>';
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), MINUTE(time) FROM dane WHERE HOUR(time) = HOUR(NOW()) GROUP BY MINUTE(time) ";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
 						echo '<td>'.$row['MINUTE(time)'].'</td>';
-						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
-						echo '<td>'.number_format((float)$row['AVG(wiatr)'], 2, '.', ' ').'</td>';
 						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(cisn)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(pyl)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(azot)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
 						echo '</tr>';
 					}
 					echo '</table>';
@@ -124,16 +133,22 @@
 					echo '<table id="averageH">';
 					echo '<tr>';
 					echo '<td>Czas</td>';
-					echo '<td>Wilgotność</td>';
-					echo '<td>Wiatr</td>';
 					echo '<td>Temperatura</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), HOUR(time) FROM dane2 WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
+					echo '<td>Ciśnienie</td>';
+					echo '<td>Pył</td>';
+					echo '<td>Tlenek azotu</td>';
+					echo '<td>Wilgotność</td>';
+					echo '</tr>';
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), MINUTE(time) FROM dane WHERE HOUR(time) = HOUR(NOW()) GROUP BY MINUTE(time) ";
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), HOUR(time) FROM dane WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
 						echo '<td>'.$row['HOUR(time)'].':00</td>';
-						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
-						echo '<td>'.number_format((float)$row['AVG(wiatr)'], 2, '.', ' ').'</td>';
 						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(cisn)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(pyl)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(azot)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
 						echo '</tr>';
 					}
 					echo '</table>';
@@ -151,16 +166,21 @@
 					echo '<table id = "averageM">';
 					echo '<tr>';
 					echo '<td>Czas</td>';
-					echo '<td>Wilgotność</td>';
-					echo '<td>Wiatr</td>';
 					echo '<td>Temperatura</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), DAY(time) FROM dane2 WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
+					echo '<td>Ciśnienie</td>';
+					echo '<td>Pył</td>';
+					echo '<td>Tlenek azotu</td>';
+					echo '<td>Wilgotność</td>';
+					echo '</tr>';
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), DAY(time) FROM dane WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
 						echo '<td>'.$row['DAY(time)'].'</td>';
-						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
-						echo '<td>'.number_format((float)$row['AVG(wiatr)'], 2, '.', ' ').'</td>';
 						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(cisn)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(pyl)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(azot)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
 						echo '</tr>';
 					}
 					echo '</table>';
