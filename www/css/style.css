@@ -81,11 +81,11 @@ text-align: justify;
 	overflow-y: auto;
 }
 #data2 {
-	float: left;
 	font-size: 18px;
-	text-align:center;
+	text-align:left;
 	color: #303030;
-	width:400px;
+	width:920px;
+	padding-left: 200px;
 }
 #data::-webkit-scrollbar-track
 {

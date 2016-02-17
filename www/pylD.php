@@ -37,7 +37,7 @@
 </head>
 <body >
 	<div class="container">
-		<div class="topbar" ></div>
+		<a href="index.php"><div class="topbar"></div></a>
 		<div id="menu">
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
@@ -90,12 +90,14 @@
 					echo '<table id="averageH">';
 					echo '<tr>';
 					echo '<td>Czas</td>';
-					echo '<td>Pył zawieszony</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), HOUR(time) FROM dane2 WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
+					echo '<td>Pył</td>';
+					echo '</tr>';
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), MINUTE(time) FROM dane WHERE HOUR(time) = HOUR(NOW()) GROUP BY MINUTE(time) ";
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), HOUR(time) FROM dane WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
 						echo '<td>'.$row['HOUR(time)'].':00</td>';
-						echo '<td>'.number_format((float)$row['AVG(wiatr)'], 2, '.', ' ').'</td>'; //brak danych o pyle
+						echo '<td>'.number_format((float)$row['AVG(pyl)'], 2, '.', ' ').'</td>';
 						echo '</tr>';
 					}
 					echo '</table>';

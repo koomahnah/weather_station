@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div class="container">
-		<a href="/"><div class="topbar"></div></a>
+		<a href="index.php"><div class="topbar"></div></a>
 		<div id="menu">
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
@@ -59,94 +59,42 @@
 			<span class="bigtitle">Witaj w stacji pomiaru jakości powietrza <a href="http://www.agh.edu.pl/" title="Strona główna AGH" style = "text-decoration:none;" target="_blank">AGH</a></span>
 			<div class="dottedline"></div>
 			<p>Dzięki naszej stacji będziesz mógł sprawdzić jakie są najważniejsze parametry powietrza w Krakowie.</p>
-			<br>
-			<div id="data" style="height: 400px;">
+			<br></br>
+				<div id="data2">
 				<p> 
-				<h3>Dzisiejsze dane z czujników: </h3>
-				<?php
-				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
-					'cumana', 'vuFij0BS');
-				try {
-					echo '<table id="current">';
-					echo '<tr>';
-					echo '<td>Czas</td>';
-					echo '<td>Wilgotność</td>';
-					echo '<td>Wiatr</td>';
-					echo '<td>Temperatura</td>';
-					echo '</tr>';
-					$query = "SELECT *, TIME(time) FROM dane2 WHERE DATE(time) = CURDATE(); ";
-					foreach($db->query($query) as $row) {
-					echo '<tr>';
-					echo '<td>'.$row['TIME(time)'].'</td>';
-					echo '<td>'.number_format((float)$row['wilg'], 2, '.', ' ').'</td>';
-					echo '<td>'.number_format((float)$row['wiatr'], 2, '.', ' ').'</td>';
-					echo '<td>'.number_format((float)$row['temp'], 2, '.', ' ').'</td>';  //brak danych pyłu
-					echo '</tr>';
-					}
-					echo '</table>';
-				} catch(PDOException $ex) {
-					echo "error!";
-				}
-				?>
-			</p>
-			</div>
-			<div id="data2">
-			<p>
-				<h3>Dzisiejsze średnie godzinowe:</h3>
-				<?php
-				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
-					'cumana', 'vuFij0BS');
-				try {
-					echo '<table id="averageH">';
-					echo '<tr>';
-					echo '<td>Czas</td>';
-					echo '<td>Wilgotność</td>';
-					echo '<td>Wiatr</td>';
-					echo '<td>Temperatura</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), HOUR(time) FROM dane2 WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
-					foreach($db->query($query) as $row) {
+					<div style="padding-left: 100px;"> <h3>Aktualne dane z czujników: </h3> </div>
+					<?php
+					$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
+						'cumana', 'vuFij0BS');
+					try {
+						echo '<table>';
 						echo '<tr>';
-						echo '<td>'.$row['HOUR(time)'].':00</td>';
-						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
-						echo '<td>'.number_format((float)$row['AVG(wiatr)'], 2, '.', ' ').'</td>';
-						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>';
+						echo '<td>Czas</td>';
+						echo '<td>Temperatura</td>';
+						echo '<td>Ciśnienie</td>';
+						echo '<td>Pył</td>';
+						echo '<td>Tlenek azotu</td>';
+						echo '<td>Wilgotność</td>';
 						echo '</tr>';
-					}
-					echo '</table>';
-				} catch(PDOException $ex) {
-					echo "error!";
-				}
-				?>
-			</p>
-			<p>
-				<h3>Miesięczne średnie dobowe:</h3>
-				<?php
-				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
-					'cumana', 'vuFij0BS');
-				try {
-					echo '<table id = "averageM">';
-					echo '<tr>';
-					echo '<td>Czas</td>';
-					echo '<td>Wilgotność</td>';
-					echo '<td>Wiatr</td>';
-					echo '<td>Temperatura</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), DAY(time) FROM dane2 WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
-					foreach($db->query($query) as $row) {
+						$query = "SELECT *, TIME(time) FROM dane ORDER BY id DESC LIMIT 1";
+						foreach($db->query($query) as $row) {
 						echo '<tr>';
-						echo '<td>'.$row['DAY(time)'].'</td>';
-						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
-						echo '<td>'.number_format((float)$row['AVG(wiatr)'], 2, '.', ' ').'</td>';
-						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>';
+						echo '<td>'.$row['TIME(time)'].'</td>';
+						echo '<td>'.number_format((float)$row['temp'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['cisn'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['pyl'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['azot'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['wilg'], 2, '.', ' ').'</td>';
 						echo '</tr>';
+						}
+						echo '</table>';
+					} catch(PDOException $ex) {
+						echo "error!";
 					}
-					echo '</table>';
-				} catch(PDOException $ex) {
-					echo "error!";
-				}
-				?>
-			</p>
+					?>
+				</p>
+				</div>
 			</div>
-		</div>
 		<div class="footer">
 			&copy; Laboratorium projektowe 
 			<script>
