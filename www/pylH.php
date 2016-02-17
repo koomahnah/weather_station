@@ -37,7 +37,7 @@
 </head>
 <body >
 	<div class="container">
-		<div class="topbar" ></div>
+		<a href="index.php"><div class="topbar"></div></a>
 		<div id="menu">
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
@@ -81,23 +81,23 @@
 		</div>
 		<div class="content">
 			<div id="data">
-				<p> 
-				<h3>Dzisiejsze dane z czujników: </h3>
+				<p>
+				<h3>Średnie minutowe z tej godziny:</h3>
 				<?php
 				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
 					'cumana', 'vuFij0BS');
 				try {
 					echo '<table id="current">';
 					echo '<tr>';
-					echo '<td>Czas</td>';
-					echo '<td>Pył zawieszony</td>';
+					echo '<td>Minuta</td>';
+					echo '<td>Pył</td>';
 					echo '</tr>';
-					$query = "SELECT *, TIME(time) FROM dane2 WHERE DATE(time) = CURDATE(); ";
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), MINUTE(time) FROM dane WHERE HOUR(time) = HOUR(NOW()) GROUP BY MINUTE(time) ";
 					foreach($db->query($query) as $row) {
-					echo '<tr>';
-					echo '<td>'.$row['TIME(time)'].'</td>';
-					echo '<td>'.number_format((float)$row['temp'], 2, '.', ' ').'</td>';  //brak danych pyłu
-					echo '</tr>';
+						echo '<tr>';
+						echo '<td>'.$row['MINUTE(time)'].'</td>';
+						echo '<td>'.number_format((float)$row['AVG(pyl)'], 2, '.', ' ').'</td>';
+						echo '</tr>';
 					}
 					echo '</table>';
 				} catch(PDOException $ex) {

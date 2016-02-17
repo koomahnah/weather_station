@@ -37,7 +37,7 @@
 </head>
 <body >
 	<div class="container">
-		<div class="topbar" ></div>
+		<a href="index.php"><div class="topbar"></div></a>
 		<div id="menu">
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
@@ -81,7 +81,7 @@
 		</div>
 		<div class="content">
 			<div id="data">
-				<p>
+			<p>
 				<h3>Miesięczne średnie dobowe:</h3>
 				<?php
 				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
@@ -91,11 +91,12 @@
 					echo '<tr>';
 					echo '<td>Dzień</td>';
 					echo '<td>Tlenek azotu</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), DAY(time) FROM dane2 WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
+					echo '</tr>';
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), DAY(time) FROM dane WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
 						echo '<td>'.$row['DAY(time)'].'</td>';
-						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>'; //brak danych o tlenku
+						echo '<td>'.number_format((float)$row['AVG(azot)'], 2, '.', ' ').'</td>';
 						echo '</tr>';
 					}
 					echo '</table>';

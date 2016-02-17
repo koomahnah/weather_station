@@ -38,7 +38,7 @@
 </head>
 <body >
 	<div class="container">
-		<div class="topbar" ></div>
+		<a href="index.php"><div class="topbar"></div></a>
 		<div id="menu">
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
@@ -92,7 +92,8 @@
 					echo '<tr>';
 					echo '<td>Dzień</td>';
 					echo '<td>Temperatura</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), DAY(time) FROM dane2 WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
+					echo '</tr>';
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), DAY(time) FROM dane WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
 						echo '<td>'.$row['DAY(time)'].'</td>';

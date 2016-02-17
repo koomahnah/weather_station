@@ -37,7 +37,7 @@
 </head>
 <body >
 	<div class="container">
-		<div class="topbar" ></div>
+		<a href="index.php"><div class="topbar"></div></a>
 		<div id="menu">
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
@@ -91,18 +91,21 @@
 					echo '<tr>';
 					echo '<td>Czas</td>';
 					echo '<td>Tlenek azotu</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), HOUR(time) FROM dane2 WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
+					echo '</tr>';
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), MINUTE(time) FROM dane WHERE HOUR(time) = HOUR(NOW()) GROUP BY MINUTE(time) ";
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), HOUR(time) FROM dane WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
 						echo '<td>'.$row['HOUR(time)'].':00</td>';
-						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>'; //brak danych o azocie
+						echo '<td>'.number_format((float)$row['AVG(azot)'], 2, '.', ' ').'</td>';
+						echo '</tr>';
 					}
 					echo '</table>';
 				} catch(PDOException $ex) {
 					echo "error!";
 				}
 				?>
-				</p>
+			</p>
 			</div>
 			<div id="timer"></div>
 			<div style="clear:both;" ></div>

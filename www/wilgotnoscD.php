@@ -36,7 +36,7 @@
 </head>
 <body >
 	<div class="container">
-		<div class="topbar" ></div>
+		<a href="index.php"><div class="topbar"></div></a>
 		<div id="menu">
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
@@ -89,8 +89,10 @@
 					echo '<table id="averageH">';
 					echo '<tr>';
 					echo '<td>Czas</td>';
-					echo '<td>Wilgotność</td>';;
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), HOUR(time) FROM dane2 WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
+					echo '<td>Wilgotność</td>';
+					echo '</tr>';
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), MINUTE(time) FROM dane WHERE HOUR(time) = HOUR(NOW()) GROUP BY MINUTE(time) ";
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), HOUR(time) FROM dane WHERE DATE(time) = CURDATE() GROUP BY HOUR(time) ";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
 						echo '<td>'.$row['HOUR(time)'].':00</td>';

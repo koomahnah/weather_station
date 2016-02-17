@@ -37,7 +37,7 @@
 </head>
 <body >
 	<div class="container">
-		<div class="topbar" ></div>
+		<a href="index.php"><div class="topbar"></div></a>
 		<div id="menu">
 			<ol>
 				<li><a href ="#" class = "menu"> Temperatura</a>
@@ -90,12 +90,13 @@
 					echo '<table id = "averageM">';
 					echo '<tr>';
 					echo '<td>Dzień</td>';
-					echo '<td>Pył zawieszony</td>';
-					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), DAY(time) FROM dane2 WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
+					echo '<td>Pył</td>';
+					echo '</tr>';
+					$query = "SELECT AVG(temp), AVG(cisn), AVG(pyl), AVG(azot), AVG(wilg), DAY(time) FROM dane WHERE MONTH(time) = MONTH(CURDATE()) GROUP BY DAY(time)";
 					foreach($db->query($query) as $row) {
 						echo '<tr>';
 						echo '<td>'.$row['DAY(time)'].'</td>';
-						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>'; //brak pomiarow pylu
+						echo '<td>'.number_format((float)$row['AVG(pyl)'], 2, '.', ' ').'</td>';
 						echo '</tr>';
 					}
 					echo '</table>';
