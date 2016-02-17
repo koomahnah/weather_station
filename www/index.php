@@ -89,6 +89,33 @@
 				?>
 			</p>
 			<p>
+				<h3>Średnie minutowe z tej godziny:</h3>
+				<?php
+				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
+					'cumana', 'vuFij0BS');
+				try {
+					echo '<table>';
+					echo '<tr>';
+					echo '<td>Czas</td>';
+					echo '<td>Wilgotność</td>';
+					echo '<td>Wiatr</td>';
+					echo '<td>Temperatura</td>';
+					$query = "SELECT AVG(temp), AVG(wilg), AVG(wiatr), MINUTE(time) FROM dane2 WHERE HOUR(time) = HOUR(NOW()) GROUP BY MINUTE(time) ";
+					foreach($db->query($query) as $row) {
+						echo '<tr>';
+						echo '<td>'.$row['MINUTE(time)'].'</td>';
+						echo '<td>'.number_format((float)$row['AVG(wilg)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(wiatr)'], 2, '.', ' ').'</td>';
+						echo '<td>'.number_format((float)$row['AVG(temp)'], 2, '.', ' ').'</td>';
+						echo '</tr>';
+					}
+					echo '</table>';
+				} catch(PDOException $ex) {
+					echo "error!";
+				}
+				?>
+			</p>
+			<p>
 				<h3>Dzisiejsze średnie godzinowe:</h3>
 				<?php
 				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
