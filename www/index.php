@@ -59,8 +59,9 @@
 			<span class="bigtitle">Witaj w stacji pomiaru jakości powietrza <a href="http://www.agh.edu.pl/" title="Strona główna AGH" style = "text-decoration:none;" target="_blank">AGH</a></span>
 			<div class="dottedline"></div>
 			<p>Dzięki naszej stacji będziesz mógł sprawdzić jakie są najważniejsze parametry powietrza w Krakowie.</p>
-			<br></br>
-			<p> 
+			<br>
+			<div id="data" style="height: 400px;">
+				<p> 
 				<h3>Dzisiejsze dane z czujników: </h3>
 				<?php
 				$db = new PDO('mysql:host=mysql.agh.edu.pl;dbname=cumana;charset=utf-8',
@@ -79,7 +80,7 @@
 					echo '<td>'.$row['TIME(time)'].'</td>';
 					echo '<td>'.number_format((float)$row['wilg'], 2, '.', ' ').'</td>';
 					echo '<td>'.number_format((float)$row['wiatr'], 2, '.', ' ').'</td>';
-					echo '<td>'.number_format((float)$row['temp'], 2, '.', ' ').'</td>';
+					echo '<td>'.number_format((float)$row['temp'], 2, '.', ' ').'</td>';  //brak danych pyłu
 					echo '</tr>';
 					}
 					echo '</table>';
@@ -88,6 +89,8 @@
 				}
 				?>
 			</p>
+			</div>
+			<div id="data2">
 			<p>
 				<h3>Dzisiejsze średnie godzinowe:</h3>
 				<?php
@@ -142,6 +145,7 @@
 				}
 				?>
 			</p>
+			</div>
 		</div>
 		<div class="footer">
 			&copy; Laboratorium projektowe 

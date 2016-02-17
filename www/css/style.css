@@ -80,6 +80,13 @@ text-align: justify;
 	height: 150px;
 	overflow-y: auto;
 }
+#data2 {
+	float: left;
+	font-size: 18px;
+	text-align:center;
+	color: #303030;
+	width:400px;
+}
 #data::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -151,7 +158,7 @@ ol > li:first-child {
 	border-left: 2px dotted #b0c4de;
 }
 ol > li:hover {
-	background-color: #ff6347;
+	background-color: #525d7a;
 	cursor: pointer;
 	width: 141px;
 }
@@ -169,7 +176,7 @@ ol > li >ul {
 }
 ol > li > ul > li {
 	position: relative;
-	background-color: #ff6347;
+	background-color:  #667499;
 	cursor: pointer;
 	z-index: 100;
 	height: 50px;
@@ -179,7 +186,7 @@ ol > li > ul > li > a{
 	padding:5px;
 }
 ol > li > ul > li:hover {
-	background-color: #990000;
+	background-color: #3d465c;
 }
 ol > li > ul > li:hover > a {
 	color:  #fffafa;
