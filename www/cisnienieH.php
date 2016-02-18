@@ -17,7 +17,7 @@
 	function generuj() {	
 		var queue=[];
 		 //dodano wyłącznie w celach odpowiedniego wyskalowania wykresu, 
-		queue.push(23); //można usunąć w przypadku rzeczywistych czujników 
+		queue.push(27); //można usunąć w przypadku rzeczywistych czujników 
 		var currentTable = document.getElementById('current');
 		var currentTableRowLength = currentTable.rows.length;
 		for (i = 0; i < currentTableRowLength; i++){
