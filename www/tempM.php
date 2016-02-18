@@ -13,23 +13,26 @@
 	<script type="text/javascript">
 	window.onload = load;
 	function generuj() {
-		var mydata = [30];
+		var queue = [];
 		
 		var averageMTable = document.getElementById('averageM');
 		var averageMTableRowLength = averageMTable.rows.length;
 		for (i = 0; i < averageMTableRowLength; i++){
-		var oCells = averageMTable.rows.item(i).cells;
-			var cellVal = oCells.item(1).innerHTML;
-			if (i>0 && i> averageMTableRowLength-30)
-				 mydata[i] = cellVal;
-			}
-
+			var oCells = averageMTable.rows.item(i).cells;
+				var cellVal = oCells.item(1).innerHTML;
+				if (i>0 && i> averageMTableRowLength-30) {
+					 if(i>30) {
+						var x = queue.shift();	
+					}
+					 queue.push(cellVal);
+					}
+				}
 		var myplot= new MakeDraw();
 		myplot.id="mycanvas";
 		myplot.plotColor='rgba(200, 230, 50, 1)';
 		myplot.fSize=15;
 		myplot.enumerateH = 0;
-		myplot.data= mydata;
+		myplot.data= queue;
 		myplot.plot();
 		setTimeout("generuj()", 5000);
 	}

@@ -13,22 +13,27 @@
 	<script type="text/javascript">
 	window.onload = load;
 	function generuj() {
-		var mydata = [60];
-		
+		var queue=[];
+		 //dodano wyłącznie w celach odpowiedniego wyskalowania wykresu, 
+		queue.push(25); //można usunąć w przypadku rzeczywistych czujników 
 		var currentTable = document.getElementById('current');
 		var currentTableRowLength = currentTable.rows.length;
 		for (i = 0; i < currentTableRowLength; i++){
-		var oCells = currentTable.rows.item(i).cells;
-			var cellVal = oCells.item(1).innerHTML;
-			if (i>0 && i> currentTableRowLength-60)
-				 mydata[i] = cellVal;
+			var oCells = currentTable.rows.item(i).cells;
+				var cellVal = oCells.item(1).innerHTML;
+				if (i>0 && i> currentTableRowLength-60) {
+				if(i>60) {
+						var x = queue.shift();	
+					}
+					 queue.push(cellVal);
+				}
 			}
 		var myplot= new MakeDraw();
 		myplot.id="mycanvas";
 		myplot.plotColor='rgba(200, 230, 50, 1)';
 		myplot.fSize=15;
 		myplot.enumerateH =0;
-		myplot.data= mydata;
+		myplot.data= queue;
 		myplot.plot();
 		setTimeout("generuj()", 5000);
 	}
